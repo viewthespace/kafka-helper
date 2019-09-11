@@ -6,6 +6,7 @@ import os
 import json
 import ssl
 from tempfile import NamedTemporaryFile
+import typing as T
 try:
     from urllib.parse import urlparse
 except ImportError:
@@ -18,8 +19,10 @@ from cryptography.hazmat.primitives import serialization
 
 from kafka import KafkaProducer, KafkaConsumer
 
+_T = T.TypeVar('_T')
 
-def get_kafka_ssl_context():
+
+def get_kafka_ssl_context() -> ssl.SSLContext:
     """
     Returns an SSL context based on the certificate information in the Kafka config vars.
     """
@@ -81,7 +84,7 @@ def get_kafka_ssl_context():
     return ssl_context
 
 
-def get_kafka_brokers():
+def get_kafka_brokers() -> T.List[str]:
     """
     Parses the KAKFA_URL and returns a list of hostname:port pairs in the format
     that kafka-python expects.
@@ -95,8 +98,12 @@ def get_kafka_brokers():
             [urlparse(url) for url in os.environ.get('KAFKA_URL').split(',')]]
 
 
-def get_kafka_producer(acks='all',
-                       value_serializer=lambda v: json.dumps(v).encode('utf-8')):
+def get_kafka_producer(
+        acks='all',
+        value_serializer: T.Callable[[_T], bytes] = (
+            lambda v: json.dumps(v).encode('utf-8')
+            ),
+        ) -> KafkaProducer:
     """
     Return a KafkaProducer that uses the SSLContext created with create_ssl_context.
     """
@@ -113,11 +120,13 @@ def get_kafka_producer(acks='all',
 
 
 def get_kafka_consumer(
-        topic=None,
-        value_deserializer=lambda v: json.loads(v.decode('utf-8')),
-        auto_offset_reset=None,
-        consumer_timeout_ms=None,
-        ):
+        topic: T.Optional[str] = None,
+        value_deserializer: T.Callable[[bytes], _T] = (
+            lambda v: json.loads(v.decode('utf-8'))
+            ),
+        auto_offset_reset: str = None,
+        consumer_timeout_ms: int = None,
+        ) -> KafkaConsumer:
     """
     Return a KafkaConsumer that uses the SSLContext created with create_ssl_context.
     """

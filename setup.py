@@ -5,6 +5,7 @@ setup(
   version = '0.2',
   description = 'Makes it easy to use the kafka-python library with Apache Kafka on Heroku',
   packages=['kafka_helper'],
+  package_data={'kafka_helper': ['py.typed']},
   py_modules=['kafka_helper'],
   author = 'Arthur Louie',
   author_email = 'alouie@heroku.com',
@@ -22,5 +23,5 @@ setup(
       'Development Status :: 4 - Beta',
       'Topic :: Text Processing :: Linguistic',
   ],
-
+  zip_safe=False,
 )
