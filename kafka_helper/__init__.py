@@ -95,7 +95,7 @@ def get_kafka_brokers() -> T.List[str]:
         raise RuntimeError('The KAFKA_URL config variable is not set.')
 
     return ['{}:{}'.format(parsedUrl.hostname, parsedUrl.port) for parsedUrl in
-            [urlparse(url) for url in os.environ.get('KAFKA_URL').split(',')]]
+            [urlparse(url) for url in os.environ['KAFKA_URL'].split(',')]]
 
 
 def get_kafka_producer(
