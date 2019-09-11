@@ -14,6 +14,7 @@ setup(
   keywords = ['kafka', 'heroku', 'kafka-python'],
   install_requires=[
       'cryptography',
+      'kafka-python',
   ],
   license='MIT',
   classifiers = [
