@@ -112,8 +112,12 @@ def get_kafka_producer(acks='all',
     return producer
 
 
-def get_kafka_consumer(topic=None,
-                       value_deserializer=lambda v: json.loads(v.decode('utf-8'))):
+def get_kafka_consumer(
+        topic=None,
+        value_deserializer=lambda v: json.loads(v.decode('utf-8')),
+        auto_offset_reset=None,
+        consumer_timeout_ms=None,
+        ):
     """
     Return a KafkaConsumer that uses the SSLContext created with create_ssl_context.
     """
@@ -125,7 +129,9 @@ def get_kafka_consumer(topic=None,
         bootstrap_servers=get_kafka_brokers(),
         security_protocol='SSL',
         ssl_context=get_kafka_ssl_context(),
-        value_deserializer=value_deserializer
+        value_deserializer=value_deserializer,
+        auto_offset_reset=auto_offset_reset,
+        consumer_timeout_ms=consumer_timeout_ms,
     )
 
     return consumer
