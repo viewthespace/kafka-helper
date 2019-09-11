@@ -4,6 +4,7 @@ setup(
   name = 'kafka-helper',
   version = '0.2',
   description = 'Makes it easy to use the kafka-python library with Apache Kafka on Heroku',
+  packages=['kafka_helper'],
   py_modules=['kafka_helper'],
   author = 'Arthur Louie',
   author_email = 'alouie@heroku.com',
