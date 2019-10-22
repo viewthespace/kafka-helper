@@ -126,6 +126,7 @@ def get_kafka_consumer(
             ),
         auto_offset_reset: str = None,
         consumer_timeout_ms: int = None,
+        group_id: str = None,
         ) -> KafkaConsumer:
     """
     Return a KafkaConsumer that uses the SSLContext created with create_ssl_context.
@@ -141,6 +142,7 @@ def get_kafka_consumer(
         value_deserializer=value_deserializer,
         auto_offset_reset=auto_offset_reset,
         consumer_timeout_ms=consumer_timeout_ms,
+        group_id=group_id,
     )
 
     return consumer
