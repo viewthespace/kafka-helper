@@ -121,9 +121,7 @@ def get_kafka_producer(
 
 def get_kafka_consumer(
         topic: T.Optional[str] = None,
-        value_deserializer: T.Callable[[bytes], _T] = (
-            lambda v: json.loads(v.decode('utf-8'))
-            ),
+        value_deserializer: T.Callable[[bytes], bytes] = None,
         auto_offset_reset: str = None,
         consumer_timeout_ms: int = None,
         group_id: str = None,
